@@ -139,13 +139,27 @@ export const useStore = create<State>()(
     }),
     {
       name: "masa-ideas-demo-v1",
-      version: 1,
+      version: 2,
       partialize: (s) => ({
         carteles: s.carteles,
         clientes: s.clientes,
         contratos: s.contratos,
         propuestas: s.propuestas,
       }),
+      // v2: re-seedea los carteles para traer la vista de calle (Mapillary),
+      // conservando propuestas/clientes/contratos del usuario.
+      migrate: (persisted, from) => {
+        const p = persisted as {
+          carteles: Cartel[];
+          clientes: Cliente[];
+          contratos: Contrato[];
+          propuestas: Propuesta[];
+        };
+        if (p && from < 2) {
+          return { ...p, carteles: structuredClone(cartelesSeed) };
+        }
+        return p;
+      },
       onRehydrateStorage: () => (state) => {
         if (state) state._hydrated = true;
       },
