@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Masa Ideas — Sistema de gestión de carteles
+   Lenguaje visual: editorial "Mastercard" (canvas crema, formas
+   píldora/estadio, radios grandes, tipografía Sofia Sans 450,
+   sombras atmosféricas) + naranja de marca Masa Ideas como acento.
+   Marca: #E95D0F (primary) · #F29400 (amber) · base crema cálida.
+   ============================================================ */
+
+@theme {
+  /* Naranja de marca (acento e identidad) */
+  --color-brand-50: #fff4ec;
+  --color-brand-100: #ffe7d5;
+  --color-brand-200: #ffc9a3;
+  --color-brand-300: #fba871;
+  --color-brand-400: #f5853f;
+  --color-brand-500: #e95d0f;
+  --color-brand-600: #d14e0a;
+  --color-brand-700: #a93e08;
+  --color-brand-800: #82300a;
+  --color-brand-900: #5e240b;
+
+  /* Amber secundario */
+  --color-amber-400: #ffb13d;
+  --color-amber-500: #f29400;
+  --color-amber-600: #d98200;
+
+  /* Tinta cálida (ink) — near-black que tira a la crema */
+  --color-ink-700: #3a3a39;
+  --color-ink-800: #262627;
+  --color-ink-900: #141413;
+  --color-ink-950: #0e0e0d;
+
+  /* Crema editorial */
+  --color-cream-canvas: #f3f0ee;
+  --color-cream-lifted: #fcfbfa;
+  --color-cream-ghost: #e8e2da;
+
+  --font-sans: var(--font-sans-sofia), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Sombras atmosféricas (spread grande, opacidad baja) */
+  --shadow-soft: 0 4px 24px rgb(20 18 16 / 0.04);
+  --shadow-lift: 0 24px 48px rgb(20 18 16 / 0.08);
+  --shadow-pop: 0 40px 90px rgb(20 18 16 / 0.16);
+
+  /* Radios: small (≤6), medium-large (20–40), o full-pill (999) */
+  --radius-pill: 999px;
+}
+
+:root {
+  --background: #f3f0ee; /* canvas crema, nunca blanco puro */
+  --surface: #fcfbfa; /* crema elevada — papel sobre papel */
+  --surface-white: #ffffff; /* nav pill, modales, satélites */
+  --foreground: #141413; /* ink cálido */
+  --muted: #696969; /* slate gray */
+  --border: #e6e1db; /* línea cálida de bajo contraste */
+  --border-strong: #141413;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-weight: 450; /* peso "load-bearing" del sistema */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "cv01";
+}
+
+/* Display: pesos 500 con tracking negativo editorial */
+h1,
+h2,
+h3,
+.tracking-display {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* Eyebrow: punto de acento + mayúsculas con tracking */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--color-brand-500);
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-brand-900);
+}
+
+/* Scrollbar cálido y discreto */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d9d2c9 transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #d9d2c9;
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #c8c0b4;
+  background-clip: content-box;
+}
+
+/* Animaciones utilitarias */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-scale-in {
+  animation: scale-in 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Watermark crema-sobre-crema para títulos fantasma */
+.ghost-watermark {
+  color: var(--color-cream-ghost);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  user-select: none;
+}
+
+/* Arco orbital decorativo (acento naranja claro) */
+.orbital-arc {
+  stroke: var(--color-brand-400);
+  stroke-width: 1.25;
+  fill: none;
+}
+
+/* Leaflet: estética coherente con la marca */
+.leaflet-container {
+  font-family: var(--font-sans) !important;
+  background: #e8eef0 !important;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 24px !important;
+  box-shadow: var(--shadow-lift) !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: 248px !important;
+}
+.leaflet-bar {
+  border-radius: 999px !important;
+  overflow: hidden;
+}
+.leaflet-bar a {
+  color: var(--color-brand-700) !important;
+}
