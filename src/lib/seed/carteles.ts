@@ -1,4 +1,11 @@
-import type { Cartel, CartelEstado, CartelTipo, Permiso, Zona } from "../types";
+import type {
+  Cartel,
+  CartelEstado,
+  CartelTipo,
+  Permiso,
+  VistaCalle,
+  Zona,
+} from "../types";
 
 // Datos de ejemplo — carteles geolocalizados en CABA (coordenadas reales por barrio).
 // Marcas y permisos son ficticios. Precios mensuales en ARS (lista).
@@ -56,6 +63,107 @@ const S: Seed[] = [
   { codigo: "MI-SAA-001", zona: "Saavedra", lat: -34.5541, lng: -58.4873, direccion: "Av. García del Río 2600", tipo: "Frontal", m: [8, 4], caras: 1, iluminado: true, permiso: "vigente", trafico: 62000, orientacion: "Sentido a Núñez", estado: "libre", precio: 560000 },
 ];
 
+const deg = (d: number) => (d * Math.PI) / 180;
+
+// ============================================================
+// Carteles "hero" con vista en calle real (Mapillary).
+// imageId estable (la thumb se resuelve en runtime). El placement2D es un
+// punto de partida — se afina con el editor de la propuesta y se persiste.
+// Los pano además tienen placement3D para el explorador interactivo 3D.
+// ============================================================
+const VISTAS: Record<string, VistaCalle> = {
+  "MI-PAL-002": {
+    mapillaryImageId: "1053721033430849",
+    esPano: true,
+    compass: 123.84,
+    placement2D: {
+      tl: { x: 0.36, y: 0.26 },
+      tr: { x: 0.62, y: 0.24 },
+      br: { x: 0.63, y: 0.41 },
+      bl: { x: 0.37, y: 0.43 },
+    },
+    placement3D: {
+      lng: -58.43132284661,
+      lat: -34.581011273585,
+      alt: 6,
+      rotation: [deg(90), deg(123.84), 0],
+      anchoM: 10,
+      altoM: 5,
+    },
+  },
+  "MI-BEL-001": {
+    mapillaryImageId: "466376756444925",
+    esPano: true,
+    compass: 147.83,
+    placement2D: {
+      tl: { x: 0.4, y: 0.28 },
+      tr: { x: 0.6, y: 0.27 },
+      br: { x: 0.61, y: 0.42 },
+      bl: { x: 0.39, y: 0.43 },
+    },
+    placement3D: {
+      lng: -58.456334658851,
+      lat: -34.562629168259,
+      alt: 6.5,
+      rotation: [deg(90), deg(147.83), 0],
+      anchoM: 9,
+      altoM: 5,
+    },
+  },
+  "MI-CAB-001": {
+    mapillaryImageId: "1511194999598428",
+    esPano: true,
+    compass: 241.62,
+    placement2D: {
+      tl: { x: 0.34, y: 0.27 },
+      tr: { x: 0.6, y: 0.25 },
+      br: { x: 0.61, y: 0.42 },
+      bl: { x: 0.35, y: 0.44 },
+    },
+    placement3D: {
+      lng: -58.441011,
+      lat: -34.6188824,
+      alt: 6,
+      rotation: [deg(90), deg(241.62), 0],
+      anchoM: 8,
+      altoM: 4,
+    },
+  },
+  "MI-PMA-001": {
+    mapillaryImageId: "629089286828663",
+    esPano: false,
+    compass: 175.93,
+    placement2D: {
+      tl: { x: 0.38, y: 0.22 },
+      tr: { x: 0.64, y: 0.2 },
+      br: { x: 0.65, y: 0.36 },
+      bl: { x: 0.39, y: 0.38 },
+    },
+  },
+  "MI-REC-001": {
+    mapillaryImageId: "518803084385082",
+    esPano: false,
+    compass: 315.16,
+    placement2D: {
+      tl: { x: 0.35, y: 0.24 },
+      tr: { x: 0.62, y: 0.22 },
+      br: { x: 0.63, y: 0.39 },
+      bl: { x: 0.36, y: 0.41 },
+    },
+  },
+  "MI-MIC-002": {
+    mapillaryImageId: "1302554987792622",
+    esPano: false,
+    compass: 219.15,
+    placement2D: {
+      tl: { x: 0.37, y: 0.25 },
+      tr: { x: 0.63, y: 0.23 },
+      br: { x: 0.64, y: 0.4 },
+      bl: { x: 0.38, y: 0.42 },
+    },
+  },
+};
+
 export const cartelesSeed: Cartel[] = S.map((s) => ({
   id: s.codigo.toLowerCase(),
   codigo: s.codigo,
@@ -75,4 +183,5 @@ export const cartelesSeed: Cartel[] = S.map((s) => ({
   estado: s.estado,
   precioMensual: s.precio,
   notas: s.notas,
+  vistaCalle: VISTAS[s.codigo],
 }));

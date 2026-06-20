@@ -21,6 +21,7 @@ import type {
   Propuesta,
   PropuestaEstado,
   PropuestaItem,
+  Quad,
 } from "@/lib/types";
 
 import { Button } from "@/components/ui/Button";
@@ -28,13 +29,15 @@ import { Card } from "@/components/ui/Card";
 import { Avatar } from "@/components/ui/Avatar";
 import { Field, Input, Textarea, Select } from "@/components/ui/Field";
 import { CartelEstadoBadge } from "@/components/ui/StatusBadge";
-import { CartelPhoto, MockupView } from "@/components/cartel/CartelPhoto";
+import { CartelPhoto } from "@/components/cartel/CartelPhoto";
 import { useToast } from "@/components/ui/toast";
 import {
   MockupEditor,
   faceTransform,
   centerTransform,
 } from "@/components/proposals/MockupEditor";
+import { StreetMockupView } from "@/components/proposals/street/StreetMockupView";
+import { StreetMockupEditor } from "@/components/proposals/street/StreetMockupEditor";
 import {
   Check,
   ChevronLeft,
@@ -100,6 +103,7 @@ export function Builder({ propuestaId }: { propuestaId?: string }) {
   const propuestas = useStore((s) => s.propuestas);
   const addPropuesta = useStore((s) => s.addPropuesta);
   const updatePropuesta = useStore((s) => s.updatePropuesta);
+  const updateCartel = useStore((s) => s.updateCartel);
 
   const cartelMap = useMemo(() => byId(carteles), [carteles]);
   const clienteMap = useMemo(() => byId(clientes), [clientes]);
@@ -256,6 +260,13 @@ export function Builder({ propuestaId }: { propuestaId?: string }) {
             setState={setState}
             cartelMap={cartelMap}
             cliente={cliente}
+            persistVista={(cartel, quad) => {
+              if (!cartel.vistaCalle) return;
+              updateCartel(cartel.id, {
+                vistaCalle: { ...cartel.vistaCalle, placement2D: quad },
+              });
+              toast("Encuadre guardado en el cartel", "success");
+            }}
           />
         )}
         {step === 4 && (
@@ -709,11 +720,13 @@ function Step3Mockups({
   setState,
   cartelMap,
   cliente,
+  persistVista,
 }: {
   state: BuilderState;
   setState: React.Dispatch<React.SetStateAction<BuilderState>>;
   cartelMap: Map<string, Cartel>;
   cliente?: import("@/lib/types").Cliente;
+  persistVista: (cartel: Cartel, quad: Quad) => void;
 }) {
   const [activeId, setActiveId] = useState<string>(
     state.items[0]?.cartelId ?? "",
@@ -802,6 +815,7 @@ function Step3Mockups({
   }
 
   const t = activeMockup.transform;
+  const isStreet = !!activeCartel.vistaCalle;
 
   return (
     <div className="grid gap-4 lg:grid-cols-[230px_minmax(0,1fr)]">
@@ -829,7 +843,12 @@ function Step3Mockups({
                 )}
               >
                 <div className="relative aspect-[16/10] bg-neutral-100">
-                  <MockupView cartel={c} mockup={mk} className="size-full" />
+                  <StreetMockupView cartel={c} mockup={mk} className="size-full" />
+                  {c.vistaCalle && (
+                    <span className="absolute left-1.5 top-1.5 rounded bg-ink-950/65 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-white backdrop-blur">
+                      Calle real
+                    </span>
+                  )}
                   <span
                     className={cn(
                       "absolute right-1.5 top-1.5 grid size-5 place-items-center rounded-full text-white shadow",
@@ -857,11 +876,22 @@ function Step3Mockups({
       {/* editor */}
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_280px]">
         <div>
-          <MockupEditor
-            cartel={activeCartel}
-            mockup={activeMockup}
-            onChange={(transform) => updateTransform(activeCartel.id, transform)}
-          />
+          {isStreet ? (
+            <StreetMockupEditor
+              cartel={activeCartel}
+              mockup={activeMockup}
+              onChange={(patch) => updateMockup(activeCartel.id, patch)}
+              onPersistVista={(quad) => persistVista(activeCartel, quad)}
+            />
+          ) : (
+            <MockupEditor
+              cartel={activeCartel}
+              mockup={activeMockup}
+              onChange={(transform) =>
+                updateTransform(activeCartel.id, transform)
+              }
+            />
+          )}
 
           {/* acciones de arte */}
           <div className="mt-3 flex flex-wrap gap-2">
@@ -880,7 +910,7 @@ function Step3Mockups({
               <Sparkles className="size-4" />
               Usar arte de la marca
             </Button>
-            {activeMockup.artUrl && (
+            {activeMockup.artUrl && !isStreet && (
               <>
                 <Button
                   size="sm"
@@ -902,18 +932,18 @@ function Step3Mockups({
                   <AlignCenter className="size-4" />
                   Centrar
                 </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="text-red-600 hover:bg-red-50"
-                  onClick={() =>
-                    updateMockup(activeCartel.id, { artUrl: null })
-                  }
-                >
-                  <Trash2 className="size-4" />
-                  Quitar arte
-                </Button>
               </>
+            )}
+            {activeMockup.artUrl && (
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-red-600 hover:bg-red-50"
+                onClick={() => updateMockup(activeCartel.id, { artUrl: null })}
+              >
+                <Trash2 className="size-4" />
+                Quitar arte
+              </Button>
             )}
           </div>
         </div>
@@ -927,8 +957,13 @@ function Step3Mockups({
             <p className="mt-0.5 text-xs text-[var(--muted)]">
               {activeCartel.direccion}
             </p>
+            {isStreet && (
+              <p className="mt-2 rounded-lg bg-brand-50 px-2.5 py-1.5 text-[11px] font-medium text-brand-700">
+                Vista en calle real · arrastrá las esquinas para calzar el arte
+              </p>
+            )}
 
-            {activeMockup.artUrl && (
+            {activeMockup.artUrl && !isStreet && (
               <div className="mt-4 space-y-3.5">
                 <Slider
                   label="Tamaño"
@@ -1120,7 +1155,7 @@ function Step4Revision({
               className="grid overflow-hidden sm:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]"
             >
               <div className="relative aspect-[16/10] bg-neutral-100">
-                <MockupView cartel={c} mockup={mk} className="size-full" />
+                <StreetMockupView cartel={c} mockup={mk} className="size-full" />
                 <span className="absolute left-2.5 top-2.5 rounded-md bg-ink-950/70 px-2 py-1 font-mono text-[11px] font-medium text-white backdrop-blur">
                   {c.codigo}
                 </span>

@@ -9,15 +9,17 @@ import { byId } from "@/lib/selectors";
 import { calcTotales, itemTotal } from "@/lib/calc";
 import { formatARS, formatDate, formatNumber, cn } from "@/lib/utils";
 import { exportarPropuestaPDF, type CartelExport } from "@/lib/pdf";
-import type { PropuestaEstado } from "@/lib/types";
+import { captureStreetMockup } from "@/lib/streetCapture";
+import type { Cartel, Mockup, PropuestaEstado } from "@/lib/types";
 
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Avatar } from "@/components/ui/Avatar";
 import { PropuestaBadge, CartelEstadoBadge } from "@/components/ui/StatusBadge";
-import { MockupView } from "@/components/cartel/CartelPhoto";
 import { MockupCaptureNode } from "@/components/proposals/MockupCaptureNode";
+import { StreetMockupView } from "@/components/proposals/street/StreetMockupView";
+import { StreetExplorer } from "@/components/proposals/street/StreetExplorer";
 import { useToast } from "@/components/ui/toast";
 import {
   ArrowLeft,
@@ -31,6 +33,7 @@ import {
   Loader2,
   CalendarClock,
   Clock,
+  Compass,
 } from "lucide-react";
 
 const ESTADOS: { value: PropuestaEstado; label: string }[] = [
@@ -61,6 +64,10 @@ export default function PropuestaDetallePage({
   const cartelMap = useMemo(() => byId(carteles), [carteles]);
 
   const [exporting, setExporting] = useState(false);
+  const [explorando, setExplorando] = useState<{
+    cartel: Cartel;
+    mockup?: Mockup;
+  } | null>(null);
   // refs de los nodos de captura, por cartelId
   const captureRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -109,18 +116,30 @@ export default function PropuestaDetallePage({
       for (const item of propuesta!.items) {
         const cartel = cartelMap.get(item.cartelId);
         if (!cartel) continue;
-        const node = captureRefs.current[item.cartelId];
         let mockupDataUrl: string | null = null;
-        if (node) {
-          try {
-            mockupDataUrl = await toJpeg(node, {
-              quality: 0.92,
-              pixelRatio: 2,
-              cacheBust: true,
-              backgroundColor: "#e5e5e5",
-            });
-          } catch {
-            mockupDataUrl = null;
+
+        // carteles con vista de calle: still real (canvas, determinístico)
+        if (cartel.vistaCalle) {
+          mockupDataUrl = await captureStreetMockup(
+            cartel,
+            mockupDe(item.cartelId),
+          );
+        }
+
+        // fallback / sintéticos: captura del nodo oculto con html-to-image
+        if (!mockupDataUrl) {
+          const node = captureRefs.current[item.cartelId];
+          if (node) {
+            try {
+              mockupDataUrl = await toJpeg(node, {
+                quality: 0.92,
+                pixelRatio: 2,
+                cacheBust: true,
+                backgroundColor: "#e5e5e5",
+              });
+            } catch {
+              mockupDataUrl = null;
+            }
           }
         }
         exportCarteles.push({
@@ -254,16 +273,31 @@ export default function PropuestaDetallePage({
               className="grid gap-0 overflow-hidden lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]"
             >
               <div className="relative aspect-[16/10] bg-neutral-100">
-                <MockupView
+                <StreetMockupView
                   cartel={cartel}
                   mockup={mockup}
                   className="size-full"
                 />
-                <div className="absolute left-3 top-3">
+                <div className="absolute left-3 top-3 flex items-center gap-2">
                   <span className="rounded-md bg-ink-950/70 px-2 py-1 font-mono text-[11px] font-medium text-white backdrop-blur">
                     {cartel.codigo}
                   </span>
+                  {cartel.vistaCalle && (
+                    <span className="rounded-md bg-brand-500/90 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-white backdrop-blur">
+                      Calle real
+                    </span>
+                  )}
                 </div>
+                {cartel.vistaCalle && (
+                  <button
+                    type="button"
+                    onClick={() => setExplorando({ cartel, mockup })}
+                    className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-lg bg-white/90 px-2.5 py-1.5 text-[12px] font-semibold text-ink-800 shadow-md backdrop-blur transition hover:bg-white"
+                  >
+                    <Compass className="size-3.5" />
+                    Explorar en la calle
+                  </button>
+                )}
               </div>
 
               <div className="flex flex-col p-5">
@@ -381,6 +415,15 @@ export default function PropuestaDetallePage({
           );
         })}
       </div>
+
+      {/* Explorador 3D en la calle */}
+      {explorando && (
+        <StreetExplorer
+          cartel={explorando.cartel}
+          mockup={explorando.mockup}
+          onClose={() => setExplorando(null)}
+        />
+      )}
     </div>
   );
 }
