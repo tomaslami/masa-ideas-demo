@@ -1,0 +1,110 @@
+/* ============================================================
+   Masa Ideas — Color tokens
+   Single accent (logo orange) + cream / white / charcoal.
+   Warm-neutral grays. Restrained semantic set.
+   ============================================================ */
+
+:root {
+  /* --- Brand: orange accent (from logo "ideas") --- */
+  --orange-50:  #FEF3EC;
+  --orange-100: #FCE3D2;
+  --orange-200: #F9C4A1;
+  --orange-300: #F69E68;
+  --orange-400: #F37B36;
+  --orange-500: #F06010;  /* primary accent */
+  --orange-600: #D8530C;  /* hover */
+  --orange-700: #B5430A;  /* active / pressed */
+  --orange-800: #8C3408;
+  --orange-900: #5E2306;
+
+  /* --- Brand: deep ember red (from logo emblem) — rare, for depth --- */
+  --ember-500: #A01020;
+  --ember-700: #6E0B16;
+
+  /* --- Cream surfaces (warm off-white page) --- */
+  --cream-50:  #FFFFFF;   /* pure white cards */
+  --cream-100: #FBFAF7;   /* page background */
+  --cream-200: #F5F2EC;   /* sunken / striped rows */
+  --cream-300: #EDE9E0;   /* hover fills on cream */
+
+  /* --- Charcoal (sidebar / ink) — warm-tinted neutral --- */
+  --char-950: #161513;
+  --char-900: #1C1B1A;   /* sidebar base */
+  --char-800: #26241F;   /* sidebar raised / hover */
+  --char-700: #34322C;
+  --char-600: #4A4842;
+
+  /* --- Warm neutral grays (borders, text on light) --- */
+  --ink-900: #1F1E1B;   /* primary text / headings */
+  --ink-700: #413F3A;   /* body text */
+  --ink-500: #6B685F;   /* secondary text */
+  --ink-400: #8E8A80;   /* muted / placeholder */
+  --ink-300: #B6B1A6;   /* disabled text */
+  --line-300: #E7E2D8;  /* default border */
+  --line-200: #EFEBE2;  /* subtle divider */
+  --line-400: #D6D0C3;  /* strong border */
+
+  /* --- Semantic --- */
+  --success-50:  #E9F4EC;
+  --success-500: #2F8F5B;
+  --success-700: #1F6F44;
+  --warning-50:  #FBF1DC;
+  --warning-500: #C98A12;   /* amber, kept distinct from accent */
+  --warning-700: #8F6109;
+  --danger-50:   #FBEAE7;
+  --danger-500:  #C8372D;
+  --danger-700:  #97271F;
+  --info-50:     #E8EFF6;
+  --info-500:    #3A6EA5;
+  --info-700:    #2A5078;
+
+  /* ====================================================
+     SEMANTIC ALIASES — use these in components
+     ==================================================== */
+
+  /* Backgrounds & surfaces */
+  --bg-page:        var(--cream-100);
+  --bg-sunken:      var(--cream-200);
+  --surface-card:   var(--cream-50);
+  --surface-raised: var(--cream-50);
+  --surface-hover:  var(--cream-300);
+  --sidebar-bg:     var(--char-900);
+  --sidebar-raised: var(--char-800);
+
+  /* Text */
+  --text-heading:   var(--ink-900);
+  --text-body:      var(--ink-700);
+  --text-muted:     var(--ink-500);
+  --text-faint:     var(--ink-400);
+  --text-disabled:  var(--ink-300);
+  --text-on-accent: #FFFFFF;
+  --text-on-dark:   #E9E4DA;
+  --text-on-dark-muted: #A39E92;
+
+  /* Accent */
+  --accent:         var(--orange-500);
+  --accent-hover:   var(--orange-600);
+  --accent-active:  var(--orange-700);
+  --accent-soft:    var(--orange-50);
+  --accent-soft-2:  var(--orange-100);
+  --accent-text:    var(--orange-700);   /* orange text on cream, legible */
+
+  /* Borders */
+  --border:         var(--line-300);
+  --border-subtle:  var(--line-200);
+  --border-strong:  var(--line-400);
+  --border-focus:   var(--orange-500);
+  --ring:           rgba(240, 96, 16, 0.28);
+
+  /* Status text/fills */
+  --ok-fg:    var(--success-700);  --ok-bg:   var(--success-50);
+  --warn-fg:  var(--warning-700);  --warn-bg: var(--warning-50);
+  --bad-fg:   var(--danger-700);   --bad-bg:  var(--danger-50);
+  --info-fg:  var(--info-700);     --info-bg: var(--info-50);
+
+  /* Inventory / pipeline accents (derived, warm) */
+  --status-disponible: var(--success-500);
+  --status-reservado:  var(--warning-500);
+  --status-ocupado:    var(--orange-500);
+  --status-mantenim:   var(--info-500);
+}

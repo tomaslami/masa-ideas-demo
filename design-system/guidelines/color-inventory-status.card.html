@@ -1,0 +1,18 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Estados de inventario" subtitle="Colores de estado para carteles y pipeline" -->
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 24px; background: var(--bg-page); display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+  .item { display: flex; align-items: center; gap: 10px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .item b { font: var(--fw-semibold) 14px/1 var(--font-sans); color: var(--text-heading); }
+  .item small { font: 11px/1 var(--font-mono); color: var(--text-muted); margin-left: 4px; }
+</style></head>
+<body>
+  <div class="item"><span class="dot" style="background:#2F8F5B;box-shadow:0 0 0 4px #2F8F5B29"></span><b>Disponible</b><small>verde</small></div>
+  <div class="item"><span class="dot" style="background:#C98A12;box-shadow:0 0 0 4px #C98A1229"></span><b>Reservado</b><small>ámbar</small></div>
+  <div class="item"><span class="dot" style="background:#F06010;box-shadow:0 0 0 4px #F0601029"></span><b>Ocupado</b><small>naranja</small></div>
+  <div class="item"><span class="dot" style="background:#3A6EA5;box-shadow:0 0 0 4px #3A6EA529"></span><b>Mantenimiento</b><small>azul</small></div>
+  <div class="item"><span class="dot" style="background:#C8372D;box-shadow:0 0 0 4px #C8372D29"></span><b>Vencido</b><small>rojo</small></div>
+</body></html>

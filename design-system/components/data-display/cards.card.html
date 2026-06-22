@@ -1,0 +1,58 @@
+<!-- @dsCard group="Components" viewport="700x300" name="Cards, Avatars & Stats" subtitle="surfaces · KPIs · people" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; padding: 24px; background: var(--bg-page); }
+  .wrap { display: grid; grid-template-columns: 260px 1fr; gap: 20px; align-items: start; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const { Card, Avatar, Stat, Badge, Button } = window.DesignSystem_27db72;
+  function Demo() {
+    return (
+      <div className="wrap">
+        <Card
+          header={<><strong style={{fontFamily:'var(--font-mono)',fontSize:'var(--text-sm)'}}>MI-0428</strong><Badge tone="success">Disponible</Badge></>}
+          footer={<Button size="sm" variant="secondary" fullWidth iconRight="arrow-right">Ver ficha</Button>}
+          padding="md"
+        >
+          <div style={{fontFamily:'var(--font-display)',fontSize:'var(--text-lg)',color:'var(--text-heading)',marginBottom:6}}>Av. Corrientes 3200</div>
+          <div style={{fontSize:'var(--text-sm)',color:'var(--text-muted)'}}>Frente · 8 × 4 m · Iluminado · Balvanera</div>
+        </Card>
+        <div>
+          <Card elevation="sm" padding="lg" style={{marginBottom:16}}>
+            <div className="stats">
+              <Stat label="Ocupación" value="78" unit="%" delta="+4 pts" icon="layout-grid" />
+              <Stat label="Ingreso mensual" value="14,2M" unit="ARS" delta="+8,1%" icon="banknote" />
+            </div>
+          </Card>
+          <Card elevation="flat" padding="md">
+            <div style={{display:'flex',alignItems:'center',gap:12}}>
+              <Avatar name="Lucía Fernández" size={40} />
+              <div style={{flex:1}}>
+                <div style={{fontWeight:'var(--fw-semibold)',color:'var(--text-heading)'}}>Lucía Fernández</div>
+                <div style={{fontSize:'var(--text-sm)',color:'var(--text-muted)'}}>Ejecutiva comercial · 12 cuentas</div>
+              </div>
+              <Avatar name="Diego Roca" size={32} />
+              <Avatar name="Sofía Paz" size={32} />
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body>
+</html>

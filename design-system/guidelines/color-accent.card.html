@@ -1,0 +1,23 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Acento — Naranja" subtitle="Escala del único acento de marca (del logo)" -->
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--bg-page); }
+  .row { display: flex; gap: 0; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); }
+  .sw { flex: 1; height: 92px; display: flex; flex-direction: column; justify-content: flex-end; padding: 8px; }
+  .sw b { font: var(--fw-semibold) 11px/1.3 var(--font-mono); }
+  .sw small { font: 10px/1.3 var(--font-mono); opacity: 0.8; }
+</style></head>
+<body>
+  <div class="row" id="r"></div>
+  <script>
+    const steps = [['50','#FEF3EC'],['100','#FCE3D2'],['200','#F9C4A1'],['300','#F69E68'],['400','#F37B36'],['500','#F06010'],['600','#D8530C'],['700','#B5430A'],['800','#8C3408'],['900','#5E2306']];
+    document.getElementById('r').innerHTML = steps.map(([k,v]) => {
+      const dark = ['400','500','600','700','800','900'].includes(k);
+      const col = dark ? '#fff' : '#5E2306';
+      const tag = k==='500' ? '(accent)' : '';
+      return `<div class="sw" style="background:${v};color:${col}"><b>${k} ${tag}</b><small>${v}</small></div>`;
+    }).join('');
+  </script>
+</body></html>

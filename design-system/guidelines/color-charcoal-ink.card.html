@@ -1,0 +1,30 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Carbón & Tinta" subtitle="Sidebar oscuro y jerarquía de texto" -->
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--bg-page); display: flex; gap: 14px; }
+  .panel { flex: 1; border-radius: var(--radius-md); padding: 14px; }
+  .dark { background: #1C1B1A; }
+  .dark .s { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .dot { width: 22px; height: 22px; border-radius: var(--radius-sm); flex: 0 0 auto; }
+  .dark b { font: var(--fw-medium) 12px/1 var(--font-mono); }
+  .dark small { font: 10px/1 var(--font-mono); }
+  .ink { background: #FFFFFF; border: 1px solid var(--border); }
+  .ink .line { font-family: var(--font-sans); margin-bottom: 7px; }
+</style></head>
+<body>
+  <div class="panel dark">
+    <div class="s"><span class="dot" style="background:#161513"></span><span><b style="color:#fff">char-950</b> <small style="color:#A39E92">#161513</small></span></div>
+    <div class="s"><span class="dot" style="background:#1C1B1A"></span><span><b style="color:#fff">char-900 · sidebar</b> <small style="color:#A39E92">#1C1B1A</small></span></div>
+    <div class="s"><span class="dot" style="background:#26241F"></span><span><b style="color:#fff">char-800 · raised</b> <small style="color:#A39E92">#26241F</small></span></div>
+    <div class="s" style="margin:0"><span class="dot" style="background:#34322C"></span><span><b style="color:#fff">char-700</b> <small style="color:#A39E92">#34322C</small></span></div>
+  </div>
+  <div class="panel ink">
+    <div class="line" style="font-size:18px;font-weight:600;color:#1F1E1B">Texto heading · ink-900</div>
+    <div class="line" style="font-size:14px;color:#413F3A">Texto body · ink-700</div>
+    <div class="line" style="font-size:14px;color:#6B685F">Texto secundario · ink-500</div>
+    <div class="line" style="font-size:14px;color:#8E8A80">Muted / placeholder · ink-400</div>
+    <div class="line" style="font-size:13px;color:#B6B1A6;margin:0">Disabled · ink-300</div>
+  </div>
+</body></html>

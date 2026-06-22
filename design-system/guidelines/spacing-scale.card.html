@@ -1,0 +1,19 @@
+<!-- @dsCard group="Spacing" viewport="700x170" name="Escala de espaciado" subtitle="Grilla base 4px — del 2 al 64" -->
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 24px; background: var(--surface-card); display: flex; align-items: flex-end; gap: 14px; }
+  .col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .bar { background: var(--accent-soft-2); border: 1px solid var(--orange-200); border-radius: var(--radius-xs); }
+  .col b { font: var(--fw-semibold) 11px/1 var(--font-mono); color: var(--accent-text); }
+  .col small { font: 10px/1 var(--font-mono); color: var(--text-faint); }
+</style></head>
+<body id="b">
+  <script>
+    const tokens = [['1',2],['2',4],['3',8],['4',12],['5',16],['6',20],['7',24],['8',32],['9',40],['10',48],['11',64]];
+    document.getElementById('b').innerHTML = tokens.map(([k,v]) =>
+      `<div class="col"><div class="bar" style="width:${Math.max(v,6)}px;height:${v}px"></div><b>${k}</b><small>${v}</small></div>`
+    ).join('');
+  </script>
+</body></html>

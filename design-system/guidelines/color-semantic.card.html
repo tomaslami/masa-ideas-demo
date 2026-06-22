@@ -1,0 +1,22 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Semánticos" subtitle="Éxito, advertencia, error, info — restringidos" -->
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--bg-page); }
+  .row { display: flex; gap: 14px; }
+  .sw { flex: 1; }
+  .pair { display: flex; height: 56px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); }
+  .pair .fill { flex: 1.4; }
+  .pair .soft { flex: 1; display: flex; align-items: center; justify-content: center; font: var(--fw-semibold) 12px var(--font-sans); }
+  .sw b { display: block; font: var(--fw-semibold) 12px/1.6 var(--font-sans); color: var(--text-heading); margin-top: 8px; }
+  .sw small { font: 10px/1.4 var(--font-mono); color: var(--text-muted); }
+</style></head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="pair"><div class="fill" style="background:#2F8F5B"></div><div class="soft" style="background:#E9F4EC;color:#1F6F44">Aa</div></div><b>Éxito</b><small>#2F8F5B / #E9F4EC</small></div>
+    <div class="sw"><div class="pair"><div class="fill" style="background:#C98A12"></div><div class="soft" style="background:#FBF1DC;color:#8F6109">Aa</div></div><b>Advertencia</b><small>#C98A12 / #FBF1DC</small></div>
+    <div class="sw"><div class="pair"><div class="fill" style="background:#C8372D"></div><div class="soft" style="background:#FBEAE7;color:#97271F">Aa</div></div><b>Error</b><small>#C8372D / #FBEAE7</small></div>
+    <div class="sw"><div class="pair"><div class="fill" style="background:#3A6EA5"></div><div class="soft" style="background:#E8EFF6;color:#2A5078">Aa</div></div><b>Info</b><small>#3A6EA5 / #E8EFF6</small></div>
+  </div>
+</body></html>

@@ -1,0 +1,48 @@
+<!-- @dsCard group="Components" viewport="700x520" name="Sidebar (app shell)" subtitle="navegación oscura · estado activo naranja" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style> body { margin: 0; background: var(--bg-page); height: 520px; } </style>
+</head>
+<body>
+<div id="root" style="height:520px"></div>
+<script type="text/babel">
+  const { Sidebar } = window.DesignSystem_27db72;
+  function Demo() {
+    const [active, setActive] = React.useState('inventario');
+    return (
+      <div style={{ height: 520, display: 'flex' }}>
+        <Sidebar
+          logoSrc="../../assets/logo_mark.png"
+          brand="Masa Ideas" product="Gestión interna"
+          active={active} onSelect={setActive}
+          items={[
+            { section: 'Operación' },
+            { id: 'inventario', label: 'Inventario', icon: 'map-pin', badge: 16 },
+            { id: 'pipeline', label: 'Pipeline', icon: 'kanban', badge: 18 },
+            { id: 'propuestas', label: 'Propuestas', icon: 'file-text' },
+            { id: 'clientes', label: 'Clientes', icon: 'users' },
+            { divider: true },
+            { section: 'Cuenta' },
+            { id: 'reportes', label: 'Reportes', icon: 'chart-no-axes-column' },
+            { id: 'config', label: 'Configuración', icon: 'settings' },
+          ]}
+          user={{ name: 'Lucía Fernández', role: 'Ejecutiva comercial' }}
+        />
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-faint)', fontSize: 'var(--text-sm)' }}>
+          Sección activa: <strong style={{ color: 'var(--text-body)', marginLeft: 6 }}>{active}</strong>
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body>
+</html>

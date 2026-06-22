@@ -10,35 +10,16 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@dnd-kit/core": "^6.3.1",
-    "@dnd-kit/sortable": "^10.0.0",
-    "@dnd-kit/utilities": "^3.2.2",
-    "clsx": "^2.1.1",
-    "html-to-image": "^1.11.13",
-    "jspdf": "^4.2.1",
-    "leaflet": "^1.9.4",
-    "lucide-react": "^1.21.0",
-    "mapillary-js": "^4.1.2",
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "react-leaflet": "^5.0.0",
-    "react-moveable": "^0.56.0",
-    "tailwind-merge": "^3.6.0",
-    "three": "^0.184.0",
-    "zustand": "^5.0.14"
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/leaflet": "^1.9.21",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/three": "^0.184.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
-    "puppeteer-core": "^25.1.0",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }

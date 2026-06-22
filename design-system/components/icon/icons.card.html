@@ -1,0 +1,30 @@
+<!-- @dsCard group="Components" viewport="700x300" name="Iconography — Lucide" subtitle="2px stroke set used across the system" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { margin: 0; padding: 22px; background: var(--bg-page); }
+  .grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 6px; background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); }
+  .cell svg { width: 22px; height: 22px; color: var(--ink-700); stroke-width: 2; }
+  .cell span { font: var(--fw-medium) 10px/1 var(--font-mono); color: var(--text-faint); text-align: center; }
+  h4 { margin: 0 0 12px; font-size: var(--text-md); color: var(--text-muted); font-family: var(--font-sans); font-weight: var(--fw-semibold); letter-spacing: var(--ls-caps); text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="grid" id="g"></div>
+<script>
+  const names = ['map-pin','map','building-2','panel-right','layers','navigation','search','filter','plus','pencil','copy','trash-2','calendar','banknote','file-text','send','download','share-2','chevron-down','arrow-right','circle-check','clock','triangle-alert','star','users','phone','mail','settings','lightbulb','image','ruler','more-horizontal'];
+  const g = document.getElementById('g');
+  for (const n of names) {
+    const c = document.createElement('div'); c.className = 'cell';
+    c.innerHTML = `<i data-lucide="${n}"></i><span>${n}</span>`;
+    g.appendChild(c);
+  }
+  lucide.createIcons();
+</script>
+</body>
+</html>

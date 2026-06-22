@@ -1,39 +1,31 @@
 import type { Metadata } from "next";
-import { Sofia_Sans, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
-import "leaflet/dist/leaflet.css";
-import { AppShell } from "@/components/layout/AppShell";
-
-// Sofia Sans: sustituto open-source más cercano a MarkForMC (lenguaje Mastercard).
-const sofiaSans = Sofia_Sans({
-  variable: "--font-sans-sofia",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
-  title: "Masa Ideas · Sistema de gestión de carteles",
+  title: "Masa Ideas · Gestión interna",
   description:
-    "Un solo lugar para ver el inventario, gestionar clientes y armar propuestas profesionales en minutos.",
+    "Herramienta interna de Masa Ideas — inventario de vía pública, pipeline comercial y generador de propuestas.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="es-AR"
-      className={`${sofiaSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full">
-        <AppShell>{children}</AppShell>
-      </body>
+    <html lang="es">
+      <head>
+        {/*
+          Lucide icons are loaded from the CDN as `window.lucide`, exactly as
+          the design system specifies. `beforeInteractive` injects it into the
+          initial HTML so it is fetched before app code; the <Icon> component
+          polls for `window.lucide` to cover the load race.
+        */}
+        <Script
+          src="https://unpkg.com/lucide@latest"
+          strategy="beforeInteractive"
+        />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

@@ -1,0 +1,11 @@
+/* ============================================================
+   Masa Ideas — Webfonts
+   Loaded from Google Fonts CDN. See readme.md "VISUAL FOUNDATIONS"
+   for the substitution note (no self-hosted binaries yet).
+   ------------------------------------------------------------
+   Spectral      — editorial serif, used for display / headings
+   IBM Plex Sans — UI + body + data tables (legible, tabular)
+   IBM Plex Mono — codes, IDs, metrics, numeric emphasis
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');

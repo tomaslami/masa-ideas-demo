@@ -1,0 +1,20 @@
+<!-- @dsCard group="Type" viewport="700x230" name="Escala tipográfica" subtitle="Tamaños de 11 a 48px — UI primero" -->
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 22px 24px; background: var(--surface-card); }
+  .r { display: flex; align-items: baseline; gap: 16px; padding: 5px 0; border-bottom: 1px solid var(--border-subtle); }
+  .r:last-child { border: 0; }
+  .tag { width: 120px; flex: 0 0 auto; font: 11px/1 var(--font-mono); color: var(--text-faint); }
+  .demo { color: var(--text-heading); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style></head>
+<body>
+  <div class="r"><span class="tag">5xl · 48 / display</span><span class="demo" style="font-family:var(--font-display);font-size:38px;font-weight:500">Masa Ideas</span></div>
+  <div class="r"><span class="tag">3xl · 30 / display</span><span class="demo" style="font-family:var(--font-display);font-size:28px;font-weight:500">Inventario y mapa</span></div>
+  <div class="r"><span class="tag">xl · 20 / display</span><span class="demo" style="font-family:var(--font-display);font-size:20px;font-weight:500">Pipeline comercial</span></div>
+  <div class="r"><span class="tag">lg · 17 / sans</span><span class="demo" style="font-family:var(--font-sans);font-size:17px;font-weight:600">Generador de propuestas</span></div>
+  <div class="r"><span class="tag">base · 14 / sans</span><span class="demo" style="font-family:var(--font-sans);font-size:14px">Texto de interfaz por defecto, tablas de datos</span></div>
+  <div class="r"><span class="tag">xs · 12 / sans</span><span class="demo" style="font-family:var(--font-sans);font-size:12px;color:var(--text-muted)">Notas, ayudas y metadatos secundarios</span></div>
+  <div class="r"><span class="tag">2xs · 11 / caps</span><span class="demo eyebrow">Eyebrow / etiqueta en mayúsculas</span></div>
+</body></html>

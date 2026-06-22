@@ -1,0 +1,7 @@
+/* ============================================================
+   Masa Ideas — Webfonts (loaded from Google Fonts CDN).
+   Inter         — UI + body + titles (single sans, no serif)
+   IBM Plex Mono — codes, IDs, metrics, numeric emphasis
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap');

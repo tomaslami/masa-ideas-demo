@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Masa Ideas — herramienta de gestión interna
 
-## Getting Started
+App web (Next.js 16 + React 19) construida **desde cero sobre el design system de Masa Ideas**
+(empresa de vía pública en Buenos Aires). Es una herramienta interna B2B: prioriza densidad de
+datos, legibilidad y rapidez. Estética cálida y profesional — fondo crema, sidebar carbón, un
+único acento naranja y tipografía editorial (Spectral) para títulos.
 
-First, run the development server:
+## Módulos
+
+- **Inventario con mapa** (`/inventario`) — mapa full-screen de CABA con pines por cartel,
+  popups, búsqueda y panel lateral con filtros (estado, localidad, tipo, iluminación).
+- **Pipeline comercial / CRM** (`/pipeline`) — tablero kanban con drag & drop entre etapas,
+  vista de lista, KPIs y ficha de oportunidad.
+- **Generador de propuestas** (`/propuestas`) — asistente de 5 pasos (cliente → carteles →
+  creatividad → condiciones → revisión) con preview imprimible del documento comercial.
+
+`/clientes`, `/reportes` y `/configuracion` quedan como placeholders ("en construcción").
+
+## Cómo correr
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev      # http://localhost:3000
+pnpm build && pnpm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Los íconos (Lucide) se cargan desde CDN (`unpkg.com/lucide`), tal como define el design
+> system. Hace falta conexión a internet para que se rendericen.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+design-system/      Design system entregado, verbatim (referencia canónica):
+                    tokens, componentes, guidelines, ui_kits, assets, readme.md, SKILL.md.
+src/
+  app/              App Router: layout (carga fuentes + Lucide), globals.css, una ruta por módulo.
+  ds/               Design system integrado a la app:
+    tokens/         CSS de colores, tipografía, espaciado, fuentes y base.
+    components/     Componentes React (Button, Sidebar, Modal, Input, Card, …) + barrel `index.js`.
+  modules/          Pantallas de cada módulo, portadas de `design-system/ui_kits/` a Next.js.
+public/
+  brand/            Logos (emblema + wordmark).
+  inventory/        Mapa estilizado de Buenos Aires.
+```
 
-## Learn More
+## Decisiones de diseño técnico
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Tokens primero:** todo el estilo sale de las variables CSS en `src/ds/tokens` (importadas por
+  `src/app/globals.css`). No hay Tailwind ni colores inventados — solo los tokens del sistema.
+- **Componentes del DS** portados verbatim del zip; se les agregó `'use client'` y se reemplazó el
+  namespace global `window.DesignSystem_*` por imports ES (`@/ds`).
+- **Apps client-only:** cada módulo es interactivo (mapa, drag, FileReader, íconos por CDN), así
+  que se montan con `next/dynamic({ ssr: false })`.
+- El sidebar navega entre módulos vía el router de Next (`src/modules/nav.js`).

@@ -1,0 +1,8 @@
+# pnpm 11 reads build-script approval + run settings from here (not package.json).
+# These transitive native deps (sharp via Next, unrs-resolver via
+# eslint-config-next) are approved to run their install scripts.
+allowBuilds:
+  sharp: true
+  unrs-resolver: true
+# Skip pnpm's pre-run dependency check before `pnpm dev` / `pnpm build`.
+verifyDepsBeforeRun: false

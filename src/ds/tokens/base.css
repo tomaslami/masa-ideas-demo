@@ -1,0 +1,85 @@
+/* ============================================================
+   Masa Ideas — Base element styles + helpers
+   Applied on top of the design tokens. Keep minimal.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+  color: var(--text-body);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings — editorial serif */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text-heading);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-snug);
+  margin: 0;
+}
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-2xl); }
+h4 { font-size: var(--text-xl); }
+
+p { margin: 0; }
+
+a { color: var(--accent-text); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Numeric / code */
+code, kbd, samp { font-family: var(--font-mono); font-size: 0.9em; }
+
+/* Tabular numbers helper — apply to numeric tables/metrics */
+.tnum { font-feature-settings: var(--fvn-tabular); font-variant-numeric: tabular-nums; }
+
+/* Eyebrow / uppercase label */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Focus ring (keyboard) */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-sm);
+}
+
+/* Scrollbar — discreet, warm */
+* { scrollbar-width: thin; scrollbar-color: var(--line-400) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: var(--line-400);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--ink-400); background-clip: padding-box; }
+
+/* Spinner used by Button/IconButton loading state */
+@keyframes mi-spin { to { transform: rotate(360deg); } }
+.mi-spin { animation: mi-spin 0.7s linear infinite; }
+
+/* Modal / overlay entrance */
+@keyframes mi-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mi-pop { from { opacity: 0; transform: translateY(6px) scale(0.99); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
